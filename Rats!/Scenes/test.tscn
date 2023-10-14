@@ -1,3 +1,33 @@
-[gd_scene format=3 uid="uid://uepjkgerncs7"]
+[gd_scene load_steps=3 format=3 uid="uid://uepjkgerncs7"]
+
+[ext_resource type="PackedScene" uid="uid://bpwmrnyg0l8gb" path="res://Scenes/player.tscn" id="1_32y7t"]
+[ext_resource type="Script" path="res://Scripts/StairRegion.gd" id="2_fsltj"]
 
 [node name="Node2D" type="Node2D"]
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="BackWall" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 64, 576, 192, 0, 192)
+
+[node name="FourthWall" type="CollisionPolygon2D" parent="Walls"]
+position = Vector2(0, 8.85001)
+scale = Vector2(1, 0.9875)
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 444.709, 576, 574.329, 0, 574.329)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.34902, 0.360784, 0.34902, 1)
+polygon = PackedVector2Array(0, 192, 576, 192, 1152, 64, 1152, 448, 576, 576, 0, 576)
+
+[node name="Player" parent="." instance=ExtResource("1_32y7t")]
+position = Vector2(64, 384)
+
+[node name="StairRegion" type="Area2D" parent="."]
+script = ExtResource("2_fsltj")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StairRegion"]
+modulate = Color(0, 0.705882, 0.364706, 1)
+self_modulate = Color(0.145098, 0.482353, 0.894118, 1)
+polygon = PackedVector2Array(576, 576, 576, 192, 1152, 64, 1152, 448)
