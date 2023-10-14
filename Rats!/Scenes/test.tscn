@@ -3,31 +3,51 @@
 [ext_resource type="PackedScene" uid="uid://bpwmrnyg0l8gb" path="res://Scenes/player.tscn" id="1_32y7t"]
 [ext_resource type="Script" path="res://Scripts/StairRegion.gd" id="2_fsltj"]
 
-[node name="Node2D" type="Node2D"]
+[node name="main" type="Node2D"]
 
 [node name="Walls" type="StaticBody2D" parent="."]
 
 [node name="BackWall" type="CollisionPolygon2D" parent="Walls"]
-polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 64, 576, 192, 0, 192)
+position = Vector2(0, -64)
+polygon = PackedVector2Array(-512, 0, 3328, 0, 3328, 448, 2496, 448, 2112, 64, 1152, 64, 576, 192, -512, 184)
 
 [node name="FourthWall" type="CollisionPolygon2D" parent="Walls"]
 position = Vector2(0, 8.85001)
 scale = Vector2(1, 0.9875)
-polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 444.709, 576, 574.329, 0, 574.329)
+polygon = PackedVector2Array(-512, 1092.81, 3328, 1092.81, 3328, 833.57, 2496, 833.57, 2112, 444.709, 1152, 444.709, 576, 574.329, -512, 574.329)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 color = Color(0.34902, 0.360784, 0.34902, 1)
-polygon = PackedVector2Array(0, 192, 576, 192, 1152, 64, 1152, 448, 576, 576, 0, 576)
+polygon = PackedVector2Array(-512, 192, 576, 192, 1152, 64, 2112, 64, 2496, 448, 3328, 448, 3328, 832, 2496, 832, 2112, 448, 1152, 448, 576, 576, -512, 576)
 
 [node name="Player" parent="." instance=ExtResource("1_32y7t")]
 position = Vector2(64, 384)
 
 [node name="StairRegion" type="Area2D" parent="."]
+position = Vector2(576, 192)
 script = ExtResource("2_fsltj")
+metadata/StairAngleRatio = 0.222
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StairRegion"]
 modulate = Color(0, 0.705882, 0.364706, 1)
 self_modulate = Color(0.145098, 0.482353, 0.894118, 1)
+position = Vector2(-576, -192)
 polygon = PackedVector2Array(576, 576, 576, 192, 1152, 64, 1152, 448)
+
+[node name="StairRegion2" type="Area2D" parent="."]
+position = Vector2(2112, 72)
+script = ExtResource("2_fsltj")
+metadata/StairAngleRatio = -1.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StairRegion2"]
+modulate = Color(0, 0.705882, 0.364706, 1)
+self_modulate = Color(0.145098, 0.482353, 0.894118, 1)
+position = Vector2(-576, -200)
+polygon = PackedVector2Array(576, 576, 576, 192, 960, 576, 960, 960)
+
+[connection signal="body_entered" from="StairRegion" to="Player" method="_on_stair_region_body_entered"]
+[connection signal="body_exited" from="StairRegion" to="Player" method="_on_stair_region_body_exited"]
+[connection signal="body_entered" from="StairRegion2" to="Player" method="_on_stair_region_2_body_entered"]
+[connection signal="body_exited" from="StairRegion2" to="Player" method="_on_stair_region_2_body_exited"]

@@ -1,5 +1,6 @@
 extends Area2D
 
+const StairAngleRatio = 2/9;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
